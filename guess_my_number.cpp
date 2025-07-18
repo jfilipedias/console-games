@@ -2,11 +2,11 @@
 #include <ctime>
 #include <iostream>
 
-int main() {
+void guessMyNumber() {
     srand(static_cast<unsigned int>(time(0)));
     int randNumber{ rand() % 100 + 1 };
     int tries{ 0 };
-    int guess;
+    int guess{ 0 };
 
     std::cout << "Wellcome to Guess My Number\n";
 
