@@ -9,4 +9,5 @@ add_executable(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME} 
     PRIVATE main.cpp
-    guess_my_number.cpp)
+    guess_my_number.cpp
+    word_jumble.cpp)

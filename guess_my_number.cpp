@@ -9,7 +9,7 @@ void guessMyNumber() {
     int tries{ 0 };
     int guess{ 0 };
 
-    std::cout << "Wellcome to Guess My Number!!!\n";
+    std::cout << "\t\tWellcome to Guess My Number!!!\n";
 
     while (randNumber != guess) {
         std::cout << "\nEnter a guess: ";
