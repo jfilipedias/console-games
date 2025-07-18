@@ -1,3 +1,4 @@
+#include "guess_my_number.h"
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -22,5 +23,5 @@ void guessMyNumber() {
         }
     }
 
-    std::cout << "That's it. You got it in " << tries << " guesses   ";
+    std::cout << "That's it. You got it in " << tries << " guesses";
 }
