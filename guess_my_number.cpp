@@ -2,14 +2,18 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <random>
 
 void guessMyNumber() {
-    srand(static_cast<unsigned int>(time(0)));
-    int randNumber{ rand() % 100 + 1 };
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(1, 100);
+
+    int randNumber{ dist(mt) };
     int tries{ 0 };
     int guess{ 0 };
 
-    std::cout << "\t\tWellcome to Guess My Number!!!\n";
+    std::cout << "\t\tGuess My Number\n";
 
     while (randNumber != guess) {
         std::cout << "\nEnter a guess: ";

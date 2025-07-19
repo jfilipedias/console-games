@@ -2,11 +2,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <random>
 
 void wordJumble() {
-    srand(static_cast<unsigned int>(time(0)));
-    int randNumber{ rand() % 100 + 1 };
-
     enum fields { WORD,
                   HINT };
 
@@ -20,13 +18,16 @@ void wordJumble() {
         { "jumble", "It's what the game is all about." }
     };
 
-    srand(static_cast<unsigned int>(time(0)));
-    int choice = (rand() % NUM_WORDS);
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(1, 100);
+
+    int choice{ dist(mt) % NUM_WORDS };
     std::string theWord{ WORDS[choice][WORD] };
     std::string theHint{ WORDS[choice][HINT] };
 
-    std::string jumble = theWord;
-    int length = jumble.size();
+    std::string jumble{ theWord };
+    int length{ static_cast<int>(jumble.size()) };
 
     for (int i{ 0 }; i < length; ++i) {
         int firstIdx{ rand() % length };
@@ -36,7 +37,7 @@ void wordJumble() {
         jumble[secondIdx] = temp;
     }
 
-    std::cout << "\t\tWellcome to Word Jumble!!!\n\n";
+    std::cout << "\t\tWord Jumble\n\n";
     std::cout << "Unscramble the letters to make a word.\n";
     std::cout << "Enter 'hint' for a hint.\n";
     std::cout << "Enter 'quit' to quit the game.\n";
@@ -50,9 +51,9 @@ void wordJumble() {
         if (guess == "hint") {
             std::cout << theHint;
         } else if (guess == theWord) {
-            std::cout << "\nThat’s it! You guessed it!\n";
+            std::cout << "\nThat's it! You guessed it!\n";
         } else {
-            std::cout << "Sorry, that’s not it";
+            std::cout << "Sorry, that's not it";
         }
     }
 }
