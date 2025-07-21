@@ -1,4 +1,3 @@
-#include "guess_my_number.h"
 #include <cstdlib>
 #include <ctime>
 #include <iostream>

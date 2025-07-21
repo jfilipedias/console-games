@@ -1,5 +1,6 @@
-#include "guess_my_number.h"
-#include "word_jumble.h"
+#include "guess_my_number.cpp"
+#include "hangman.cpp"
+#include "word_jumble.cpp"
 #include <iostream>
 
 int main() {
@@ -11,6 +12,7 @@ int main() {
         std::cout << "Choose a game bellow to play:\n";
         std::cout << "(1) Guess My Number\n";
         std::cout << "(2) Word Jumble\n";
+        std::cout << "(3) Hangman\n";
         std::cout << "Enter a number: ";
         std::cin >> choice;
         std::cout << "\n";
@@ -19,6 +21,8 @@ int main() {
             guessMyNumber();
         } else if (choice == 2) {
             wordJumble();
+        } else if (choice == 3) {
+            hangman();
         } else {
             std::cout << "Invalid option!";
         }
