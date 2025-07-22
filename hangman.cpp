@@ -11,9 +11,9 @@ void hangman() {
     words.push_back("HANGMAN");
     words.push_back("DIFFICULT");
 
-    std::random_device rd;
-    std::mt19937 mt(rd());
-    std::shuffle(words.begin(), words.end(), mt);
+    std::random_device rd{};
+    std::mt19937 gen{ rd() };
+    std::shuffle(words.begin(), words.end(), gen);
 
     const std::string THE_WORD{ words[0] };
     int wrongGuesses{ 0 };

@@ -17,11 +17,11 @@ void wordJumble() {
         { "jumble", "It's what the game is all about." }
     };
 
-    std::random_device rd;
-    std::mt19937 mt(rd());
-    std::uniform_int_distribution<int> dist(1, 100);
+    std::random_device rd{};
+    std::mt19937 gen{ rd() };
+    std::uniform_int_distribution<int> dist{ 1, 100 };
 
-    int choice{ dist(mt) % NUM_WORDS };
+    int choice{ dist(gen) % NUM_WORDS };
     std::string theWord{ WORDS[choice][WORD] };
     std::string theHint{ WORDS[choice][HINT] };
 

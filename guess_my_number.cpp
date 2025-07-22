@@ -4,11 +4,11 @@
 #include <random>
 
 void guessMyNumber() {
-    std::random_device rd;
-    std::mt19937 mt(rd());
-    std::uniform_int_distribution<int> dist(1, 100);
+    std::random_device rd{};
+    std::mt19937 gen{ rd() };
+    std::uniform_int_distribution<int> dist{ 1, 100 };
 
-    int randNumber{ dist(mt) };
+    int randNumber{ dist(gen) };
     int tries{ 0 };
     int guess{ 0 };
 
