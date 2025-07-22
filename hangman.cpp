@@ -26,5 +26,40 @@ void hangman() {
         std::cout << "\nYou have " << wrongGuesses << " incorrect guesses";
         std::cout << "\nYou've used the following letters: " << triedLetters;
         std::cout << "\nSo far, the word is: " << lettersGuessed;
+
+        char guess;
+        std::cout << "\n\nEnter yout guess: ";
+        std::cin >> guess;
+        guess = std::toupper(guess);
+
+        while (triedLetters.find(guess) != std::string::npos) {
+            std::cout << "\nYou've already guessed " << guess;
+            std::cout << "\n\nEnter yout guess: ";
+            std::cin >> guess;
+            guess = std::toupper(guess);
+        }
+
+        triedLetters += guess;
+
+        if (THE_WORD.find(guess) != std::string::npos) {
+            std::cout << "\nThat's right! " << guess << " is in the word.\n";
+
+            for (int i{ 0 }; i < THE_WORD.length(); ++i) {
+                if (THE_WORD[i] == guess) {
+                    lettersGuessed[i] = guess;
+                }
+            }
+        } else {
+            std::cout << "\nSorry, " << guess << " isn't in the word.\n";
+            ++wrongGuesses;
+        }
     }
+
+    if (wrongGuesses == MAX_WRONG_GUESSES) {
+        std::cout << "\nYou've been hanged!";
+    } else {
+        std::cout << "\nYou guessed it!";
+    }
+
+    std::cout << "\nThe word was " << THE_WORD;
 }
