@@ -4,13 +4,13 @@
 
 void instructions();
 
-char askYesNo();
+char askYesNo(std::string question);
 
 int askNumber(std::string question, int high, int low = 0);
 
-char humanPiece();
+char askHumanSymbol();
 
-char opponent(char symbol);
+char getOpponentSymbol(char symbol);
 
 void displayBoard(const std::vector<char>& board);
 
