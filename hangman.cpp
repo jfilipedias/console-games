@@ -1,3 +1,4 @@
+#include "hangman.h"
 #include <algorithm>
 #include <iostream>
 #include <random>

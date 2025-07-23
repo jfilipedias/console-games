@@ -1,0 +1,25 @@
+#pragma once
+
+void instructions();
+
+char askYesNo();
+
+int askNumber(std::string question, int high, int low = 0);
+
+char humanPiece();
+
+char opponent(char symbol);
+
+void displayBoard(const std::vector<char>& board);
+
+char getWinner(const std::vector<char>& board);
+
+bool isLegal(const std::vector<char>& board);
+
+int humanMove(const std::vector<char>& board, char humanSymbol);
+
+int computerMove(std::vector<char>& board, char computerSymbol);
+
+void announceWinner(char winnerSymbol, char computerSymbol, char humanSymbol);
+
+void ticTacToe();
