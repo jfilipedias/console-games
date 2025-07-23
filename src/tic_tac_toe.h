@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 
+void ticTacToe();
+
 void instructions();
 
 char askYesNo(std::string question);
@@ -16,12 +18,10 @@ void displayBoard(const std::vector<char>& board);
 
 char getWinner(const std::vector<char>& board);
 
-bool isLegal(const std::vector<char>& board);
+bool isLegal(int move, const std::vector<char>& board);
 
 int humanMove(const std::vector<char>& board, char humanSymbol);
 
-int computerMove(std::vector<char>& board, char computerSymbol);
+int computerMove(std::vector<char> board, char computerSymbol);
 
 void announceWinner(char winnerSymbol, char computerSymbol, char humanSymbol);
-
-void ticTacToe();
