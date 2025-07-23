@@ -1,8 +1,6 @@
 #include "tic_tac_toe.h"
 #include <algorithm>
 #include <iostream>
-#include <string>
-#include <vector>
 
 const char X = 'X';
 const char O = 'O';
