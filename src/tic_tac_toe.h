@@ -14,13 +14,13 @@ char askHumanSymbol();
 
 char getOpponentSymbol(char symbol);
 
-void displayBoard(const std::vector<char>& board);
+void displayBoard(const std::vector<char>* const board);
 
-char getWinner(const std::vector<char>& board);
+char getWinner(const std::vector<char>* const board);
 
-bool isLegal(int move, const std::vector<char>& board);
+bool isLegal(int move, const std::vector<char>* const board);
 
-int humanMove(const std::vector<char>& board, char humanSymbol);
+int humanMove(const std::vector<char>* const board, char humanSymbol);
 
 int computerMove(std::vector<char> board, char computerSymbol);
 

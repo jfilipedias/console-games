@@ -18,22 +18,22 @@ void ticTacToe() {
     char computerSymbol{ getOpponentSymbol(humanSymbol) };
     char turnSymbol{ X_SYMBOL };
 
-    displayBoard(board);
+    displayBoard(&board);
 
-    while (getWinner(board) == NO_ONE_SYMBOL) {
+    while (getWinner(&board) == NO_ONE_SYMBOL) {
         if (turnSymbol == humanSymbol) {
-            position = humanMove(board, humanSymbol);
+            position = humanMove(&board, humanSymbol);
             board[position] = humanSymbol;
         } else {
             position = computerMove(board, computerSymbol);
             board[position] = computerSymbol;
         }
 
-        displayBoard(board);
+        displayBoard(&board);
         turnSymbol = getOpponentSymbol(turnSymbol);
     }
 
-    announceWinner(getWinner(board), computerSymbol, humanSymbol);
+    announceWinner(getWinner(&board), computerSymbol, humanSymbol);
 }
 
 void instructions() {
@@ -83,15 +83,15 @@ char getOpponentSymbol(char symbol) {
     return X_SYMBOL;
 }
 
-void displayBoard(const std::vector<char>& board) {
-    std::cout << "\n\t" << board[0] << " | " << board[1] << " | " << board[2];
+void displayBoard(const std::vector<char>* const board) {
+    std::cout << "\n\t" << (*board)[0] << " | " << (*board)[1] << " | " << (*board)[2];
     std::cout << "\n\t" << "---------";
-    std::cout << "\n\t" << board[3] << " | " << board[4] << " | " << board[5];
+    std::cout << "\n\t" << (*board)[3] << " | " << (*board)[4] << " | " << (*board)[5];
     std::cout << "\n\t" << "---------";
-    std::cout << "\n\t" << board[6] << " | " << board[7] << " | " << board[8] << "\n";
+    std::cout << "\n\t" << (*board)[6] << " | " << (*board)[7] << " | " << (*board)[8] << "\n";
 }
 
-char getWinner(const std::vector<char>& board) {
+char getWinner(const std::vector<char>* const board) {
     const int WINNING_COMBINATIONS[8][3]{ { 0, 1, 2 },
                                           { 3, 4, 5 },
                                           { 6, 7, 8 },
@@ -103,30 +103,30 @@ char getWinner(const std::vector<char>& board) {
 
     const int TOTAL_COMBINATIONS{ 8 };
     for (int i{ 0 }; i < TOTAL_COMBINATIONS; ++i) {
-        char symbol{ board[WINNING_COMBINATIONS[i][0]] };
+        char symbol{ (*board)[WINNING_COMBINATIONS[i][0]] };
         if (symbol != EMPTY_SYMBOL &&
-            board[WINNING_COMBINATIONS[i][1]] == symbol &&
-            board[WINNING_COMBINATIONS[i][2]] == symbol) {
+            (*board)[WINNING_COMBINATIONS[i][1]] == symbol &&
+            (*board)[WINNING_COMBINATIONS[i][2]] == symbol) {
             return symbol;
         }
     }
 
-    if (count(board.begin(), board.end(), EMPTY_SYMBOL) == 0) {
+    if (count(board->begin(), board->end(), EMPTY_SYMBOL) == 0) {
         return TIE_SYMBOL;
     }
 
     return NO_ONE_SYMBOL;
 }
 
-inline bool isLegal(int move, const std::vector<char>& board) {
-    return board[move] == EMPTY_SYMBOL;
+inline bool isLegal(int move, const std::vector<char>* const board) {
+    return (*board)[move] == EMPTY_SYMBOL;
 }
 
-int humanMove(const std::vector<char>& board, char humanSymbol) {
-    int move{ askNumber("Where will you move?", board.size() - 1) };
+int humanMove(const std::vector<char>* const board, char humanSymbol) {
+    int move{ askNumber("Where will you move?", board->size() - 1) };
     while (!isLegal(move, board)) {
         std::cout << "\nThat square is already accupied, foolish human.\n";
-        move = askNumber("Where will you move?", board.size() - 1);
+        move = askNumber("Where will you move?", board->size() - 1);
         std::cout << "Fine...\n";
     }
     return move;
@@ -138,9 +138,9 @@ int computerMove(std::vector<char> board, char computerSymbol) {
 
     // If computer can win, make the move
     while (!found && move < board.size()) {
-        if (isLegal(move, board)) {
+        if (isLegal(move, &board)) {
             board[move] = computerSymbol;
-            found = getWinner(board) == computerSymbol;
+            found = getWinner(&board) == computerSymbol;
             board[move] = EMPTY_SYMBOL;
         }
 
@@ -155,9 +155,9 @@ int computerMove(std::vector<char> board, char computerSymbol) {
         char humanSymbol{ getOpponentSymbol(computerSymbol) };
 
         while (!found && move < board.size()) {
-            if (isLegal(move, board)) {
+            if (isLegal(move, &board)) {
                 board[move] = humanSymbol;
-                found = getWinner(board) == humanSymbol;
+                found = getWinner(&board) == humanSymbol;
                 board[move] = EMPTY_SYMBOL;
             }
 
@@ -175,7 +175,7 @@ int computerMove(std::vector<char> board, char computerSymbol) {
         const int BEST_MOVES[9]{ 4, 0, 2, 6, 8, 1, 3, 5, 7 };
         while (!found && i < board.size()) {
             move = BEST_MOVES[i];
-            if (isLegal(move, board)) {
+            if (isLegal(move, &board)) {
                 found = true;
             }
 
