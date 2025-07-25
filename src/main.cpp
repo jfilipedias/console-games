@@ -1,3 +1,4 @@
+#include "critter_caretaker.h"
 #include "guess_my_number.h"
 #include "hangman.h"
 #include "tic_tac_toe.h"
@@ -15,6 +16,7 @@ int main() {
         std::cout << "(2) Word Jumble\n";
         std::cout << "(3) Hangman\n";
         std::cout << "(4) Tic Tac Toe\n";
+        std::cout << "(5) Critter Caretaker\n";
         std::cout << "Enter a number: ";
         std::cin >> choice;
         std::cout << "\n";
@@ -27,6 +29,8 @@ int main() {
             hangman();
         } else if (choice == 4) {
             ticTacToe();
+        } else if (choice == 5) {
+            critterCaretaker();
         } else {
             std::cout << "Invalid option!";
         }
