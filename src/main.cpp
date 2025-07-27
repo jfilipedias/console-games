@@ -1,4 +1,5 @@
 #include "critter_caretaker.h"
+#include "game_lobby.h"
 #include "guess_my_number.h"
 #include "hangman.h"
 #include "tic_tac_toe.h"
@@ -12,11 +13,12 @@ int main() {
     while (!quit) {
         int choice{ 0 };
         std::cout << "Choose a game bellow to play:\n";
-        std::cout << "(1) Guess My Number\n";
-        std::cout << "(2) Word Jumble\n";
-        std::cout << "(3) Hangman\n";
-        std::cout << "(4) Tic Tac Toe\n";
-        std::cout << "(5) Critter Caretaker\n";
+        std::cout << "1 - Guess My Number\n";
+        std::cout << "2 - Word Jumble\n";
+        std::cout << "3 - Hangman\n";
+        std::cout << "4 - Tic Tac Toe\n";
+        std::cout << "5 - Critter Caretaker\n";
+        std::cout << "6 - Game Lobby\n";
         std::cout << "Enter a number: ";
         std::cin >> choice;
         std::cout << "\n";
@@ -31,6 +33,8 @@ int main() {
             ticTacToe();
         } else if (choice == 5) {
             critterCaretaker();
+        } else if (choice == 6) {
+            // critterCaretaker();
         } else {
             std::cout << "Invalid option!";
         }

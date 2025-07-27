@@ -8,8 +8,8 @@ class Critter {
     void Play(int fun = 4);
 
   private:
-    int m_hunger;
-    int m_boredom;
+    int m_Hunger;
+    int m_Boredom;
 
     int GetMood() const;
     void PassTime(int time = 1);

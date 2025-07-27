@@ -10,7 +10,7 @@ add_executable(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE
     src/critter_caretaker.cpp
     src/guess_my_number.cpp
-    src/word_jumble.cpp
     src/hangman.cpp
     src/tic_tac_toe.cpp
+    src/word_jumble.cpp
     src/main.cpp)

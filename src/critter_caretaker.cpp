@@ -1,16 +1,16 @@
 #include "critter_caretaker.h"
 #include <iostream>
 
-Critter::Critter(int hunger, int boredom) : m_hunger{ hunger },
-                                            m_boredom{ boredom } {}
+Critter::Critter(int hunger, int boredom) : m_Hunger{ hunger },
+                                            m_Boredom{ boredom } {}
 
 inline int Critter::GetMood() const {
-    return m_hunger + m_boredom;
+    return m_Hunger + m_Boredom;
 }
 
 void Critter::PassTime(int time) {
-    m_hunger += time;
-    m_boredom += 1;
+    m_Hunger += time;
+    m_Boredom += 1;
 }
 
 void Critter::Talk() {
@@ -33,9 +33,9 @@ void Critter::Talk() {
 void Critter::Eat(int food) {
     std::cout << "\nBrruppp.\n";
 
-    m_hunger -= food;
-    if (m_hunger < 0) {
-        m_hunger = 0;
+    m_Hunger -= food;
+    if (m_Hunger < 0) {
+        m_Hunger = 0;
     }
 
     PassTime();
@@ -44,9 +44,9 @@ void Critter::Eat(int food) {
 void Critter::Play(int fun) {
     std::cout << "\nWheee!\n";
 
-    m_boredom -= fun;
-    if (m_boredom < 0) {
-        m_boredom = 0;
+    m_Boredom -= fun;
+    if (m_Boredom < 0) {
+        m_Boredom = 0;
     }
 
     PassTime();
