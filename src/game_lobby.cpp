@@ -38,3 +38,35 @@ void Lobby::AddPlayer() {
         iter->SetNext(newPlayer);
     }
 }
+
+void Lobby::RemovePlayer() {
+    if (m_Head == nullptr) {
+        std::cout << "The game lobby is empty. No one to remove!\n";
+    } else {
+        Player* temp = m_Head;
+        m_Head = m_Head->GetNext();
+        delete temp;
+    }
+}
+
+void Lobby::Clear() {
+    while (m_Head != nullptr) {
+        RemovePlayer();
+    }
+}
+
+std::ostream& operator<<(std::ostream& os, const Lobby& aLobby) {
+    Player* iter = aLobby.m_Head;
+
+    os << "\nHere's who's in the game lobby:\n";
+    if (iter == nullptr) {
+        os << "The lobby is empty.\n";
+    } else {
+        while (iter != nullptr) {
+            os << iter->GetName() << "\n";
+            iter = iter->GetNext();
+        }
+    }
+
+    return os;
+}
