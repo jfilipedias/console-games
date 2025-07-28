@@ -70,3 +70,30 @@ std::ostream& operator<<(std::ostream& os, const Lobby& aLobby) {
 
     return os;
 }
+
+void gameLobby() {
+    Lobby lobby;
+    int choice;
+    do {
+        std::cout << "\t\tGame Lobby\n";
+        std::cout << lobby;
+        std::cout << "0 - Quit\n";
+        std::cout << "1 - Add a player to the lobby\n";
+        std::cout << "2 - Remove a player from the lobby\n";
+        std::cout << "3 - Clear the lobby\n";
+        std::cout << "Enter a choice: ";
+        std::cin >> choice;
+
+        if (choice == 0) {
+            std::cout << "Good bye!\n\n";
+        } else if (choice == 1) {
+            lobby.AddPlayer();
+        } else if (choice == 2) {
+            lobby.RemovePlayer();
+        } else if (choice == 3) {
+            lobby.Clear();
+        } else {
+            std::cout << "Invalid option!";
+        }
+    } while (choice != 0);
+}

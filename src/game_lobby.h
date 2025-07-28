@@ -26,3 +26,5 @@ class Lobby {
   private:
     Player* m_Head;
 };
+
+void gameLobby();
