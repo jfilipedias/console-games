@@ -1,8 +1,9 @@
 #include "game_lobby.h"
 #include <iostream>
 
-Player::Player(const std::string& name) : m_Name{ name },
-                                          m_Next{ nullptr } {}
+Player::Player(const std::string& name)
+    : m_Name{ name },
+      m_Next{ nullptr } {}
 
 std::string Player::GetName() const {
     return m_Name;
@@ -16,7 +17,8 @@ void Player::SetNext(Player* next) {
     m_Next = next;
 }
 
-Lobby::Lobby() : m_Head{ nullptr } {}
+Lobby::Lobby()
+    : m_Head{ nullptr } {}
 
 Lobby::~Lobby() {
     Clear();

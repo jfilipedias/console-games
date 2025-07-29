@@ -1,8 +1,9 @@
 #include "critter_caretaker.h"
 #include <iostream>
 
-Critter::Critter(int hunger, int boredom) : m_Hunger{ hunger },
-                                            m_Boredom{ boredom } {}
+Critter::Critter(int hunger, int boredom)
+    : m_Hunger{ hunger },
+      m_Boredom{ boredom } {}
 
 inline int Critter::GetMood() const {
     return m_Hunger + m_Boredom;

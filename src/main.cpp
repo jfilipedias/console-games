@@ -1,3 +1,4 @@
+#include "blackjack.h"
 #include "critter_caretaker.h"
 #include "game_lobby.h"
 #include "guess_my_number.h"
@@ -19,6 +20,7 @@ int main() {
         std::cout << "4 - Tic Tac Toe\n";
         std::cout << "5 - Critter Caretaker\n";
         std::cout << "6 - Game Lobby\n";
+        std::cout << "7 - Blackjack\n";
         std::cout << "Enter a number: ";
         std::cin >> choice;
         std::cout << "\n";
@@ -37,6 +39,8 @@ int main() {
             critterCaretaker();
         } else if (choice == 6) {
             gameLobby();
+        } else if (choice == 7) {
+            blackjack();
         } else {
             std::cout << "Invalid option!";
         }
