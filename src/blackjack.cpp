@@ -138,8 +138,8 @@ Deck::~Deck() {}
 void Deck::Populate() {
     Clear();
 
-    for (int s = Card::CLUBS; s <= Card::SPADES; ++s) {
-        for (int r = Card::ACE; r <= Card::KING; ++r) {
+    for (int s{ Card::CLUBS }; s <= Card::SPADES; ++s) {
+        for (int r{ Card::ACE }; r <= Card::KING; ++r) {
             Add(new Card{ static_cast<Card::rank>(r), static_cast<Card::suit>(s) });
         }
     }
@@ -170,4 +170,126 @@ void Deck::AdditionalCards(GenericPlayer& genericPlayer) {
             genericPlayer.Bust();
         }
     }
+}
+
+Game::Game(const std::vector<std::string>& names) {
+    std::vector<std::string>::const_iterator name;
+    for (name = names.begin(); name != names.end(); ++name) {
+        m_Players.push_back(Player{ *name });
+    }
+
+    m_Deck.Populate();
+    m_Deck.Shuffle();
+}
+
+Game::~Game() {}
+
+void Game::Play() {
+    std::vector<Player>::iterator player;
+    for (int i{ 0 }; i < 2; ++i) {
+        for (player = m_Players.begin(); player != m_Players.end(); ++player) {
+            m_Deck.Deal(*player);
+        }
+
+        m_Deck.Deal(m_House);
+    }
+
+    m_House.FlipFirstCard();
+
+    for (player = m_Players.begin(); player != m_Players.end(); ++player) {
+        m_Deck.AdditionalCards(*player);
+    }
+
+    m_House.FlipFirstCard();
+    std::cout << "\n"
+              << m_House;
+
+    m_Deck.AdditionalCards(m_House);
+
+    if (m_House.IsBusted()) {
+        for (player = m_Players.begin(); player != m_Players.end(); ++player) {
+            if (!player->IsBusted()) {
+                player->Win();
+            }
+        }
+    } else {
+        for (player = m_Players.begin(); player != m_Players.end(); ++player) {
+            if (player->IsBusted()) {
+                continue;
+            }
+
+            if (player->GetTotal() > m_House.GetTotal()) {
+                player->Win();
+            } else if (player->GetTotal() < m_House.GetTotal()) {
+                player->Lose();
+            } else {
+                player->Push();
+            }
+        }
+    }
+
+    for (player = m_Players.begin(); player != m_Players.end(); ++player) {
+        player->Clear();
+    }
+
+    m_House.Clear();
+}
+
+void blackjack() {
+    std::cout << "\t\tBlackjack\n";
+
+    int numPlayers{ 0 };
+    while (numPlayers < 1 || numPlayers > 7) {
+        std::cout << "How many players [1 - 7]: ";
+        std::cin >> numPlayers;
+    }
+
+    std::vector<std::string> names;
+    std::string name;
+    for (int i{ 0 }; i < numPlayers; ++i) {
+        std::cout << "Enter the player name:";
+        std::cin >> name;
+        names.push_back(name);
+    }
+
+    std::cout << "\n";
+
+    Game game{ names };
+    char again{ 'y' };
+    while (again != 'n' && again != 'N') {
+        game.Play();
+        std::cout << "Do you want to play again? (Y/N): ";
+        std::cin >> again;
+    }
+}
+
+std::ostream& operator<<(std::ostream& os, const Card& card) {
+    const std::string RANKS[]{ "0", "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+    const std::string SUITS[]{ "C", "D", "H", "S" };
+
+    if (card.m_isFaceUp) {
+        os << RANKS[card.m_Rank] << SUITS[card.m_Suit];
+    } else {
+        os << "XX";
+    }
+
+    return os;
+}
+
+std::ostream& operator<<(std::ostream& os, const GenericPlayer& genericPlayer) {
+    os << genericPlayer.m_Name << ":\t";
+
+    std::vector<Card*>::const_iterator card;
+    if (genericPlayer.m_Cards.empty()) {
+        os << "<empty>";
+        return os;
+    }
+
+    for (card = genericPlayer.m_Cards.begin(); card != genericPlayer.m_Cards.end(); ++card) {
+        os << *(*card) << "\t";
+    }
+
+    os << "(" << genericPlayer.GetTotal() << ")";
+
+    return os;
 }
