@@ -1,13 +1,13 @@
 #pragma once
 
 class Critter {
-  public:
+public:
     Critter(int hunger = 0, int boredom = 0);
     void Talk();
     void Eat(int food = 4);
     void Play(int fun = 4);
 
-  private:
+private:
     int m_Hunger;
     int m_Boredom;
 

@@ -2,13 +2,13 @@
 #include <string>
 
 class Player {
-  public:
+public:
     Player(const std::string& name = "");
     std::string GetName() const;
     Player* GetNext() const;
     void SetNext(Player* next);
 
-  private:
+private:
     std::string m_Name;
     Player* m_Next;
 };
@@ -16,14 +16,14 @@ class Player {
 class Lobby {
     friend std::ostream& operator<<(std::ostream& os, const Lobby& aLobby);
 
-  public:
+public:
     Lobby();
     ~Lobby();
     void AddPlayer();
     void RemovePlayer();
     void Clear();
 
-  private:
+private:
     Player* m_Head;
 };
 
