@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include <vector>
 
 class Card {
@@ -47,6 +48,52 @@ public:
 
 protected:
     std::vector<Card*> m_Cards;
+};
+
+class GenericPlayer : public Hand {
+    friend std::ostream& operator<<(std::ostream& os, const GenericPlayer& genericPlayer);
+
+public:
+    GenericPlayer(const std::string& name = "");
+    virtual ~GenericPlayer();
+
+    virtual bool IsHitting() const = 0;
+    bool IsBusted() const;
+    void Bust() const;
+
+protected:
+    std::string m_Name;
+};
+
+class Player : public GenericPlayer {
+public:
+    Player(const std::string& name = "");
+    virtual ~Player();
+
+    virtual bool IsHitting() const;
+    void Win() const;
+    void Lose() const;
+    void Push() const;
+};
+
+class House : public GenericPlayer {
+public:
+    House(const std::string& name = "House");
+    virtual ~House();
+
+    virtual bool IsHitting() const;
+    void FlipFirstCard();
+};
+
+class Deck : public Hand {
+public:
+    Deck();
+    virtual ~Deck();
+
+    void Populate();
+    void Shuffle();
+    void Deal(Hand& hand);
+    void AdditionalCards(GenericPlayer& genericPlayer);
 };
 
 void blackjack();
