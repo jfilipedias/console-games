@@ -2,12 +2,12 @@
 #include <algorithm>
 #include <random>
 
-Card::Card(rank r, suit s, bool isFaceUp)
+Blackjack::Card::Card(rank r, suit s, bool isFaceUp)
     : m_Rank{ r },
       m_Suit{ s },
       m_isFaceUp{ isFaceUp } {}
 
-int Card::GetValue() const {
+int Blackjack::Card::GetValue() const {
     int value{ 0 };
     if (m_isFaceUp) {
         value = m_Rank;
@@ -18,23 +18,23 @@ int Card::GetValue() const {
     return value;
 }
 
-void Card::Flip() {
+void Blackjack::Card::Flip() {
     m_isFaceUp = !m_isFaceUp;
 }
 
-Hand::Hand() {
+Blackjack::Hand::Hand() {
     m_Cards.reserve(7);
 }
 
-Hand::~Hand() {
+Blackjack::Hand::~Hand() {
     Clear();
 }
 
-void Hand::Add(Card* card) {
+void Blackjack::Hand::Add(Card* card) {
     m_Cards.push_back(card);
 }
 
-void Hand::Clear() {
+void Blackjack::Hand::Clear() {
     std::vector<Card*>::iterator iter;
     for (iter = m_Cards.begin(); iter != m_Cards.end(); ++iter) {
         delete *iter;
@@ -43,7 +43,7 @@ void Hand::Clear() {
     m_Cards.clear();
 }
 
-int Hand::GetTotal() const {
+int Blackjack::Hand::GetTotal() const {
     if (m_Cards.empty()) {
         return 0;
     }
@@ -74,53 +74,53 @@ int Hand::GetTotal() const {
     return total;
 }
 
-GenericPlayer::GenericPlayer(const std::string& name)
+Blackjack::GenericPlayer::GenericPlayer(const std::string& name)
     : m_Name{ name } {}
 
-GenericPlayer::~GenericPlayer() {}
+Blackjack::GenericPlayer::~GenericPlayer() {}
 
-bool GenericPlayer::IsBusted() const {
+bool Blackjack::GenericPlayer::IsBusted() const {
     return GetTotal() > 21;
 }
 
-void GenericPlayer::Bust() const {
+void Blackjack::GenericPlayer::Bust() const {
     std::cout << m_Name << " busts.\n";
 }
 
-Player::Player(const std::string& name)
+Blackjack::Player::Player(const std::string& name)
     : GenericPlayer{ name } {}
 
-Player::~Player() {}
+Blackjack::Player::~Player() {}
 
-bool Player::IsHitting() const {
+bool Blackjack::Player::IsHitting() const {
     std::cout << m_Name << ", do you want a hit? (Y/N): ";
     char response;
     std::cin >> response;
     return response == 'y' || response == 'Y';
 }
 
-void Player::Win() const {
+void Blackjack::Player::Win() const {
     std::cout << m_Name << " wins.\n";
 }
 
-void Player::Lose() const {
+void Blackjack::Player::Lose() const {
     std::cout << m_Name << " loses.\n";
 }
 
-void Player::Push() const {
+void Blackjack::Player::Push() const {
     std::cout << m_Name << " pushes.\n";
 }
 
-House::House(const std::string& name)
+Blackjack::House::House(const std::string& name)
     : GenericPlayer{ name } {}
 
-House::~House() {}
+Blackjack::House::~House() {}
 
-bool House::IsHitting() const {
+bool Blackjack::House::IsHitting() const {
     return GetTotal() <= 16;
 }
 
-void House::FlipFirstCard() {
+void Blackjack::House::FlipFirstCard() {
     if (!m_Cards.empty()) {
         m_Cards[0]->Flip();
     } else {
@@ -128,14 +128,14 @@ void House::FlipFirstCard() {
     }
 }
 
-Deck::Deck() {
+Blackjack::Deck::Deck() {
     m_Cards.reserve(52);
     Populate();
 }
 
-Deck::~Deck() {}
+Blackjack::Deck::~Deck() {}
 
-void Deck::Populate() {
+void Blackjack::Deck::Populate() {
     Clear();
 
     for (int s{ Card::CLUBS }; s <= Card::SPADES; ++s) {
@@ -145,13 +145,13 @@ void Deck::Populate() {
     }
 }
 
-void Deck::Shuffle() {
+void Blackjack::Deck::Shuffle() {
     std::random_device rd{};
     std::mt19937 gen{ rd() };
     std::shuffle(m_Cards.begin(), m_Cards.end(), gen);
 }
 
-void Deck::Deal(Hand& hand) {
+void Blackjack::Deck::Deal(Hand& hand) {
     if (!m_Cards.empty()) {
         hand.Add(m_Cards.back());
         m_Cards.pop_back();
@@ -160,7 +160,7 @@ void Deck::Deal(Hand& hand) {
     }
 }
 
-void Deck::AdditionalCards(GenericPlayer& genericPlayer) {
+void Blackjack::Deck::AdditionalCards(GenericPlayer& genericPlayer) {
     std::cout << "\n";
     while (!genericPlayer.IsBusted() && genericPlayer.IsHitting()) {
         Deal(genericPlayer);
@@ -172,7 +172,7 @@ void Deck::AdditionalCards(GenericPlayer& genericPlayer) {
     }
 }
 
-Game::Game(const std::vector<std::string>& names) {
+Blackjack::Game::Game(const std::vector<std::string>& names) {
     std::vector<std::string>::const_iterator name;
     for (name = names.begin(); name != names.end(); ++name) {
         m_Players.push_back(Player{ *name });
@@ -182,9 +182,9 @@ Game::Game(const std::vector<std::string>& names) {
     m_Deck.Shuffle();
 }
 
-Game::~Game() {}
+Blackjack::Game::~Game() {}
 
-void Game::Play() {
+void Blackjack::Game::Play() {
     std::vector<Player>::iterator player;
     for (int i{ 0 }; i < 2; ++i) {
         for (player = m_Players.begin(); player != m_Players.end(); ++player) {
@@ -254,7 +254,7 @@ void blackjack() {
 
     std::cout << "\n";
 
-    Game game{ names };
+    Blackjack::Game game{ names };
     char again{ 'y' };
     while (again != 'n' && again != 'N') {
         game.Play();
@@ -263,6 +263,7 @@ void blackjack() {
     }
 }
 
+namespace Blackjack {
 std::ostream& operator<<(std::ostream& os, const Card& card) {
     const std::string RANKS[]{ "0", "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
     const std::string SUITS[]{ "C", "D", "H", "S" };
@@ -279,7 +280,7 @@ std::ostream& operator<<(std::ostream& os, const Card& card) {
 std::ostream& operator<<(std::ostream& os, const GenericPlayer& genericPlayer) {
     os << genericPlayer.m_Name << ":\t";
 
-    std::vector<Card*>::const_iterator card;
+    std::vector<Blackjack::Card*>::const_iterator card;
     if (genericPlayer.m_Cards.empty()) {
         os << "<empty>";
         return os;
@@ -293,3 +294,4 @@ std::ostream& operator<<(std::ostream& os, const GenericPlayer& genericPlayer) {
 
     return os;
 }
+} // namespace Blackjack

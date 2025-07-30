@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+namespace Blackjack {
 class Card {
 public:
     enum rank { ACE = 1,
@@ -108,5 +109,6 @@ private:
     House m_House;
     std::vector<Player> m_Players;
 };
+} // namespace Blackjack
 
 void blackjack();
